@@ -25,9 +25,10 @@ keystone.init({
 	'auto update': true,
 	'session': true,
 	'auth': true,
-	'user model': 'User'
+	'user model': 'User',
 
 });
+
 
 // Load your project's Models
 
@@ -75,10 +76,10 @@ keystone.set('email locals', {
 
 keystone.set('email rules', [{
 	find: '/images/',
-	replace: (keystone.get('env') == 'production') ? 'http://www.your-server.com/images/' : 'http://localhost:3000/images/'
+	replace: (keystone.get('env') == 'production') ? 'https://keystone-blog.herokuapp.com/images/' : 'http://localhost:3000/images/'
 }, {
 	find: '/keystone/',
-	replace: (keystone.get('env') == 'production') ? 'http://www.your-server.com/keystone/' : 'http://localhost:3000/keystone/'
+	replace: (keystone.get('env') == 'production') ? 'https://keystone-blog.herokuapp.com/keystone/' : 'http://localhost:3000/keystone/'
 }]);
 
 // Load your project's email test routes
@@ -93,6 +94,10 @@ keystone.set('nav', {
 	'enquiries': 'enquiries',
 	'users': 'users'
 });
+
+if (keystone.get('env') == 'production'){
+	keystone.set('cloudinary config', process.env.CLOUDINARY_URL );
+}
 
 // Start Keystone to connect to your database and initialise the web server
 
