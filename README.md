@@ -8,7 +8,13 @@ Clone this repo and `cd` into it. Install dependencies with `npm install`. Fire 
 
 # Tutorial:
 
-# KeystoneJS
+# Build a blog with KeystoneJS
+
+You can see a live version [HERE](https://keystone-blog.herokuapp.com)
+
+And the source code is [HERE](https://github.com/cleechtech/keystone-blog)
+
+We are going to build a blog with image handling, secure admin login, user management and transactional email without hardly writing any code. We will use Keystone.js!
 
 Install the Keystone.js [Yeoman generator](https://github.com/keystonejs/generator-keystone):
 
@@ -147,11 +153,32 @@ Next up we need to let heroku know about our environment variables. The **.env**
 
 ```
 $ heroku config:set MANDRILL_API_KEY=YOUR_API_KEY
-$ heroku config:set CLOUDINARY_URL=cloudinary://YOUR_URL@PROJECT_NAME
+$ heroku config:set CLOUDINARY_URL=cloudinary://api_key:api_secret@cloud_name
 $ heroku config:set NODE_ENV=production
+$ heroku config:set COOKIE_SECRET=YOUR_COOKIE_STRING
+```
+
+Then use these variables for production environments. Paste this in to **keystone.js**:
+
+```
+if (keystone.get('env') == 'production'){
+    keystone.set('cloudinary config', process.env.CLOUDINARY_URL);
+    keystone.set('cookie secret', process.env.COOKIE_SECRET);
+    keystone.set('mandrill api key', process.env.MANDRILL_API_KEY);
+}
 ```
 
 You can see what env variables have been defined by running `$ heroku config`.
 
 Deploy to heroku using `$ git push heroku master`.
+
+You can see a live version [HERE](https://keystone-blog.herokuapp.com)
+
+And the source code is [HERE](https://github.com/cleechtech/keystone-blog)
+
+We only scratched the tip of the surface. Keystone.js is built on top of express and mongodb with the mongoose ORM. These are common tool we can expand this project with later!
+
+[Follow me on twitter](https://twitter.com/realjasonshark)
+
+Star the [repo](https://github.com/cleechtech/keystone-blog) on github!
 
